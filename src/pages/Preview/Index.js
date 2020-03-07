@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'dva';
 import { getConfigByType } from '@/components/index';
 import { createUUID } from '@/utils/index';
@@ -51,34 +51,9 @@ class Preview extends React.PureComponent {
     });
   };
 
-  setComponent = payload => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'preview/setComponent',
-      payload,
-    });
-  };
-
   onDrop = ev => {
     const type = ev.dataTransfer.getData('type');
     this.addComponent(type);
-  };
-
-  onDropEnd = result => {
-    const { source, destination } = result;
-    const {
-      preview: { previewList },
-    } = this.props;
-
-    if (!destination) {
-      return;
-    }
-
-    let arr = Array.from(previewList);
-    const [remove] = arr.splice(source.index, 1);
-    arr.splice(destination.index, 0, remove);
-
-    this.setComponent(arr);
   };
 
   render() {
@@ -87,41 +62,39 @@ class Preview extends React.PureComponent {
     } = this.props;
 
     return (
-      <DragDropContext onDragEnd={this.onDropEnd}>
-        <Continer>
-          <Wrap>
-            <Header />
-            <DropContainer onDrop={this.onDrop} onDragOver={ev => ev.preventDefault()}>
-              <Droppable droppableId="droppable">
-                {provided => {
-                  return (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
-                      {previewList.map((item, index) => {
-                        const { uuid, render, propsValue } = item;
-                        return (
-                          <Draggable draggableId={uuid} key={uuid} index={index}>
-                            {p => (
-                              <PreviewItem
-                                ref={p.innerRef}
-                                {...p.draggableProps}
-                                {...p.dragHandleProps}
-                                propsValue={propsValue}
-                                component={render}
-                                key={uuid}
-                              />
-                            )}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  );
-                }}
-              </Droppable>
-            </DropContainer>
-          </Wrap>
-        </Continer>
-      </DragDropContext>
+      <Continer>
+        <Wrap>
+          <Header />
+          <DropContainer onDrop={this.onDrop} onDragOver={ev => ev.preventDefault()}>
+            <Droppable droppableId="droppable">
+              {provided => {
+                return (
+                  <div ref={provided.innerRef} {...provided.droppableProps}>
+                    {previewList.map((item, index) => {
+                      const { uuid, render, propsValue } = item;
+                      return (
+                        <Draggable draggableId={uuid} key={uuid} index={index}>
+                          {p => (
+                            <PreviewItem
+                              ref={p.innerRef}
+                              {...p.draggableProps}
+                              {...p.dragHandleProps}
+                              propsValue={propsValue}
+                              component={render}
+                              key={uuid}
+                            />
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                );
+              }}
+            </Droppable>
+          </DropContainer>
+        </Wrap>
+      </Continer>
     );
   }
 }

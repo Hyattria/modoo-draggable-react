@@ -2,6 +2,7 @@ import { reduce } from 'lodash';
 
 import Text from './Text/Index';
 import Image from './Image/Index';
+import PlaceHolder from './Placeholder/Index';
 
 // 初始组件配置
 const renderMapJSON = {};
@@ -15,19 +16,22 @@ function registerComponent(key, obj) {
   renderMapJSON[key] = {
     type: key,
     render: obj.render || obj, // 组件
-    propsValue: reduce(
-      obj.getConfigProps,
-      (result, now) => {
-        result[now['name']] = now.detail.defaultValue || '';
-        return result;
-      },
-      {},
-    ), // 传入的 props
+    propsValue:
+      obj.getConfigProps &&
+      reduce(
+        obj.getConfigProps,
+        (result, now) => {
+          result[now['name']] = now.detail.defaultValue || '';
+          return result;
+        },
+        {},
+      ), // 传入的 props
   };
 }
 
 registerComponent('text', Text);
 registerComponent('image', Image);
+registerComponent('placeholder', PlaceHolder);
 
 export function getConfigByType(type) {
   return renderMapJSON[type];

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { connect } from 'dva';
+import { Droppable } from 'react-beautiful-dnd';
+
 import { getConfigByType } from '@/components/index';
 import { createUUID } from '@/utils/index';
 
@@ -54,8 +56,8 @@ const List = props => {
     });
   };
 
-  const onDragStart = (ev, config)=> {
-    console.log(1, config)
+  const onDragStart = (ev, config) => {
+    console.log(1, config);
     ev.dataTransfer.setData('type', config.type);
   };
 

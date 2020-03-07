@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { AppstoreAddOutlined } from '@ant-design/icons';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { connect } from 'dva';
 
 import List from './List';
 import Preview from './Preview';
@@ -17,28 +19,54 @@ const LightHeader = styled(Header)`
   border-bottom: 1px solid #f0f0f0;
 `;
 
-// import Libs from './components/component-libs/index'
-// import Preview from './Preview/Index'
+const BasicLayout = props => {
+  const onDropEnd = result => {
+    const { source, destination } = result;
+    const {
+      preview: { previewList },
+      dispatch,
+    } = props;
 
-export default props => (
-  <React.Fragment>
-    <LightHeader>前端微页面</LightHeader>
-    <Layout>
-      <Sider collapsed theme="light">
-        <SiderMenu defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" title='组件列表'>
-            <AppstoreAddOutlined />
-            <span>组件列表</span>
-          </Menu.Item>
-        </SiderMenu>
-      </Sider>
-      <Sider theme="light" width={180}>
-        <List />
-      </Sider>
-      <Content>
-        <Preview />
-      </Content>
-      <Sider theme="light">Footer</Sider>
-    </Layout>
-  </React.Fragment>
-);
+    if (!destination) {
+      return;
+    }
+
+    let payload = Array.from(previewList);
+    const [remove] = payload.splice(source.index, 1);
+    payload.splice(destination.index, 0, remove);
+
+    dispatch({
+      type: 'preview/setComponent',
+      payload,
+    });
+  };
+
+  return (
+    <React.Fragment>
+      <LightHeader>前端微页面</LightHeader>
+      <DragDropContext onDragEnd={onDropEnd}>
+        <Layout>
+          <Sider collapsed theme="light">
+            <SiderMenu defaultSelectedKeys={['1']} mode="inline">
+              <Menu.Item key="1" title="组件列表">
+                <AppstoreAddOutlined />
+                <span>组件列表</span>
+              </Menu.Item>
+            </SiderMenu>
+          </Sider>
+          <Sider theme="light" width={180}>
+            <List />
+          </Sider>
+          <Content>
+            <Preview />
+          </Content>
+          <Sider theme="light">Footer</Sider>
+        </Layout>
+      </DragDropContext>
+    </React.Fragment>
+  );
+};
+
+export default connect(({ preview }) => ({
+  preview,
+}))(BasicLayout);
