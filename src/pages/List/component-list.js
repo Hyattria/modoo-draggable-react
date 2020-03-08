@@ -6,7 +6,7 @@ export default [
     components: [
       {
         type: 'text',
-        title: '文字',
+        title: '标题文本',
         icon: props => <FontSizeOutlined {...props} />,
         render: () => import('@/components/Text/Index.js'),
       },

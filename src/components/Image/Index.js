@@ -13,7 +13,7 @@ const Text = props => {
   return <TextContainer>{title}</TextContainer>;
 };
 
-Text.getConfigProps = [
+Text.getPropsConfig = [
   {
     name: 'title',
     tag: 'Input',

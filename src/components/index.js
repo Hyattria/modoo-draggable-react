@@ -15,11 +15,13 @@ const renderMapJSON = {};
 function registerComponent(key, obj) {
   renderMapJSON[key] = {
     type: key,
+    title: obj.title,
     render: obj.render || obj, // 组件
+    configs: obj.getPropsConfig,
     propsValue:
-      obj.getConfigProps &&
+      obj.getPropsConfig &&
       reduce(
-        obj.getConfigProps,
+        obj.getPropsConfig,
         (result, now) => {
           result[now['name']] = now.detail.defaultValue || '';
           return result;

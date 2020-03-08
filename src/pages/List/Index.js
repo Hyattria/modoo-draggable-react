@@ -1,13 +1,9 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { connect } from 'dva';
-import { Droppable } from 'react-beautiful-dnd';
 
-import { getConfigByType } from '@/components/index';
-import { createUUID } from '@/utils/index';
-
-import styled from 'styled-components';
 import configList from './component-list';
+import styled from 'styled-components';
 
 const Container = styled.div`
   padding: 20px 12px 0;
@@ -42,22 +38,7 @@ const ItemText = styled.div`
 `;
 
 const List = props => {
-  const { dispatch } = props;
-
-  const addComponent = params => {
-    const { type } = params;
-
-    dispatch({
-      type: 'preview/addComponent',
-      payload: {
-        ...getConfigByType(type),
-        uuid: createUUID(),
-      },
-    });
-  };
-
   const onDragStart = (ev, config) => {
-    console.log(1, config);
     ev.dataTransfer.setData('type', config.type);
   };
 

@@ -6,6 +6,7 @@ import { connect } from 'dva';
 
 import List from './List';
 import Preview from './Preview';
+import FormList from './Form'
 
 import styled from 'styled-components';
 
@@ -23,7 +24,7 @@ const BasicLayout = props => {
   const onDropEnd = result => {
     const { source, destination } = result;
     const {
-      preview: { previewList },
+      preview: { previewData },
       dispatch,
     } = props;
 
@@ -31,7 +32,7 @@ const BasicLayout = props => {
       return;
     }
 
-    let payload = Array.from(previewList);
+    let payload = Array.from(previewData);
     const [remove] = payload.splice(source.index, 1);
     payload.splice(destination.index, 0, remove);
 
@@ -60,7 +61,9 @@ const BasicLayout = props => {
           <Content>
             <Preview />
           </Content>
-          <Sider theme="light">Footer</Sider>
+          <Sider theme="light" width={375}>
+            <FormList />
+          </Sider>
         </Layout>
       </DragDropContext>
     </React.Fragment>

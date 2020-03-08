@@ -40,25 +40,36 @@ const DropContainer = styled.div`
   preview,
 }))
 class Preview extends React.PureComponent {
-  addComponent = type => {
+  updateComponent = ({ seletedData, listData }) => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'preview/addComponent',
-      payload: {
-        ...getConfigByType(type),
-        uuid: createUUID(),
-      },
+      type: 'preview/updatePreview',
+      seletedData,
+      listData,
     });
   };
 
   onDrop = ev => {
+    ev.preventDefault();
+    ev.persist();
+
+    const {
+      preview: { previewData },
+    } = this.props;
+
     const type = ev.dataTransfer.getData('type');
-    this.addComponent(type);
+
+    const payload = {
+      ...getConfigByType(type),
+      uuid: createUUID(),
+    };
+
+    this.updateComponent({ seletedData: payload, listData: [...previewData, payload] });
   };
 
   render() {
     const {
-      preview: { previewList },
+      preview: { previewData },
     } = this.props;
 
     return (
@@ -70,8 +81,8 @@ class Preview extends React.PureComponent {
               {provided => {
                 return (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
-                    {previewList.map((item, index) => {
-                      const { uuid, render, propsValue } = item;
+                    {previewData.map((item, index) => {
+                      const { uuid, render, title, propsValue } = item;
                       return (
                         <Draggable draggableId={uuid} key={uuid} index={index}>
                           {p => (
@@ -81,7 +92,9 @@ class Preview extends React.PureComponent {
                               {...p.dragHandleProps}
                               propsValue={propsValue}
                               component={render}
+                              uuid={uuid}
                               key={uuid}
+                              title={title}
                             />
                           )}
                         </Draggable>
