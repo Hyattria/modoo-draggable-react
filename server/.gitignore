@@ -7,14 +7,5 @@
 /yarn.lock
 /package-lock.json
 
-# production
-/dist
-
-/build/dist
-
-# misc
-.DS_Store
-
-# umi
-.umi
-.umi-production
+build/dist
+dist.zip

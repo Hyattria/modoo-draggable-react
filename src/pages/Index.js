@@ -4,18 +4,19 @@ import { AppstoreAddOutlined } from '@ant-design/icons';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'dva';
 
+import Header from './Header'
 import List from './List';
 import Preview from './Preview';
 import FormList from './Form'
 
 import styled from 'styled-components';
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const SiderMenu = styled(Menu)`
   height: 100%;
 `;
-const LightHeader = styled(Header)`
+const LightHeader = styled(Layout.Header)`
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
 `;
@@ -44,7 +45,9 @@ const BasicLayout = props => {
 
   return (
     <React.Fragment>
-      <LightHeader>前端微页面</LightHeader>
+      <LightHeader>
+        <Header />
+      </LightHeader>
       <DragDropContext onDragEnd={onDropEnd}>
         <Layout>
           <Sider collapsed theme="light">

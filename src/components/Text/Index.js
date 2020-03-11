@@ -12,20 +12,22 @@ const Title = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: rgb(50, 50, 51);
+  text-align: ${props => props.align};
 `;
 
 const Description = styled.div`
   color: #8c8c8c;
   font-size: 12px;
-  margin-top: 8px;
+  margin-top: ${props => props.desc ? '8px' : 0};
+  text-align: ${props => props.align};
 `;
 
 const Text = props => {
-  const { title, desc } = props;
+  const { title, desc, align } = props;
   return (
     <TextContainer>
-      <Title>{title}</Title>
-      <Description>{desc}</Description>
+      <Title align={align}>{title}</Title>
+      <Description align={align}>{desc}</Description>
     </TextContainer>
   );
 };
@@ -33,7 +35,7 @@ const Text = props => {
 Text.getPropsConfig = [
   {
     name: 'title',
-    tag: 'Input',
+    tag: 'input',
     label: '标题内容',
     detail: {
       defaultValue: '',
@@ -43,11 +45,27 @@ Text.getPropsConfig = [
   },
   {
     name: 'desc',
-    tag: 'Input',
+    tag: 'textarea',
     label: '描述内容',
     detail: {
-      defaultValue: '444',
+      defaultValue: '',
+      placeholder: '请输入描述内容',
     },
+  },
+  {
+    name: 'align',
+    tag: 'button-group',
+    label: '显示位置',
+    divider: true,
+    layout: 'horizontal',
+    detail: {
+      defaultValue: 'left',
+      items: [
+        { label: '居左显示', value: 'left', icon: 'pic-left' },
+        { label: '居中显示', value: 'center', icon: 'pic-center' },
+        { label: '居右显示', value: 'right', icon: 'pic-right' }
+      ]
+    }
   }
 ];
 

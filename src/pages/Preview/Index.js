@@ -40,7 +40,7 @@ const DropContainer = styled.div`
   preview,
 }))
 class Preview extends React.PureComponent {
-  updateComponent = ({ seletedData, listData }) => {
+  updatePreview = ({ seletedData, listData }) => {
     const { dispatch } = this.props;
     dispatch({
       type: 'preview/updatePreview',
@@ -64,7 +64,7 @@ class Preview extends React.PureComponent {
       uuid: createUUID(),
     };
 
-    this.updateComponent({ seletedData: payload, listData: [...previewData, payload] });
+    this.updatePreview({ seletedData: payload, listData: [...previewData, payload] });
   };
 
   render() {
@@ -112,4 +112,4 @@ class Preview extends React.PureComponent {
   }
 }
 
-export default Preview;
+export default React.memo(Preview);

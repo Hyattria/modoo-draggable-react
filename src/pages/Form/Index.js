@@ -1,24 +1,26 @@
 import React from 'react';
-import { Card, Form, Input, Button, Checkbox } from 'antd';
+import { Card, Form, Divider, Input } from 'antd';
 import { connect } from 'dva';
 import { isEmpty, find } from 'lodash';
+import { renderComponentMap } from './Components/Index';
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+const inlineLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
 };
 
+const setLayout = layout => (layout ? { ...inlineLayout } : '');
+
 const FormList = props => {
+  const [form] = Form.useForm();
   const {
     dispatch,
     preview: { seletedData },
   } = props;
 
-  const [form] = Form.useForm();
-
   React.useEffect(() => {
     form.resetFields();
-  }, [form, seletedData.uuid]);
+  }, [seletedData.uuid]);
 
   const onValuesChange = (changedValues, allValues) => {
     const payload = { ...seletedData };
@@ -30,8 +32,8 @@ const FormList = props => {
     });
   };
 
-  const { propsValue } = seletedData
-
+  const { propsValue } = seletedData;
+  
   return (
     <Card bordered={false} title={seletedData.title || '页面设置'}>
       <Form
@@ -43,17 +45,23 @@ const FormList = props => {
       >
         {!isEmpty(seletedData) &&
           seletedData.configs.map(config => {
-            const { name, label, rules } = config;
+            const { name, label, rules, tag, detail } = config;
             return (
-              <Form.Item
-                style={{ marginBottom: 12 }}
-                key={config.name}
-                name={name}
-                label={label}
-                rules={rules}
-              >
-                <Input />
-              </Form.Item>
+              <React.Fragment key={name}>
+                {config.divider && <Divider />}
+                <Form.Item
+                  {...setLayout(config.layout)}
+                  style={{
+                    marginBottom: 12,
+                    flexDirection: config.layout === 'horizontal' ? 'row' : 'column',
+                  }}
+                  name={name}
+                  label={label}
+                  rules={rules}
+                >
+                  {renderComponentMap[tag]({ ...detail })}
+                </Form.Item>
+              </React.Fragment>
             );
           })}
       </Form>
