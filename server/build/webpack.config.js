@@ -1,6 +1,9 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InjectScriptPlugin = require('./plugins/webpack-inject-script');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -21,6 +24,23 @@ module.exports = {
         },
       },
     },
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          warning: false,
+          compress: {
+            drop_console: true,
+          },
+        },
+        sourceMap: true,
+      }),
+    ],
+  },
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
   },
   module: {
     rules: [
@@ -54,6 +74,9 @@ module.exports = {
       template: path.resolve(__dirname, 'public/index.html'),
       chunks: ['vendor', 'main'],
       inject: 'body',
+    }),
+    new InjectScriptPlugin({
+      jsonData: { a: 1 },
     }),
   ],
 };
