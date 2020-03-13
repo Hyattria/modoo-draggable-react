@@ -15,7 +15,7 @@ const FormList = props => {
   const [form] = Form.useForm();
   const {
     dispatch,
-    preview: { seletedData },
+    preview: { previewData, seletedData },
   } = props;
 
   React.useEffect(() => {
@@ -25,15 +25,16 @@ const FormList = props => {
   const onValuesChange = (changedValues, allValues) => {
     const payload = { ...seletedData };
     payload.propsValue = { ...allValues };
-
+    console.log(payload);
     dispatch({
-      type: 'preview/setSeletedData',
-      payload,
+      type: 'preview/updatePreview',
+      listData: previewData,
+      seletedData: payload,
     });
   };
 
   const { propsValue } = seletedData;
-  
+
   return (
     <Card bordered={false} title={seletedData.title || '页面设置'}>
       <Form

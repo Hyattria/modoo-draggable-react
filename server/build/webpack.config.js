@@ -1,8 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InjectScriptPlugin = require('./plugins/webpack-inject-script');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
@@ -13,6 +11,11 @@ module.exports = {
     filename: 'static/js/[name].[hash].js',
     chunkFilename: 'static/js/[name].[chunkhash].js',
     publicPath: './',
+  },
+  resolve: {
+    alias: {
+      '@components': require('path').resolve(__dirname, '../../components'),
+    },
   },
   optimization: {
     splitChunks: {
@@ -68,15 +71,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public/index.html'),
-      chunks: ['vendor', 'main'],
-      inject: 'body',
-    }),
-    new InjectScriptPlugin({
-      jsonData: { a: 1 },
-    }),
-  ],
+  plugins: [new CleanWebpackPlugin()],
 };

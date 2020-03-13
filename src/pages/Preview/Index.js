@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'dva';
-import { getConfigByType } from '@/components/index';
+import { getConfigByType } from '@components/index';
 import { createUUID } from '@/utils/index';
 
 import PreviewItem from './PreviewItem';

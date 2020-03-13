@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import fetch from 'dva/fetch';
+// import fetch from 'dva/fetch';
 import { Button } from 'antd';
+import { connect, fetch } from 'dva';
 import styled from 'styled-components';
 
 const Flex = styled.div`
@@ -9,17 +10,28 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-const Header = () => {
+const Header = props => {
   const [loading, setLoading] = useState(false);
+  const {
+    preview: { previewData, seletedData },
+  } = props;
 
   const handleDownloadPage = () => {
     setLoading(true);
+    const data = previewData.map(item => {
+      const {
+        type,
+        propsValue: { children, ...otherProps },
+      } = item;
+      return { type, children, ...otherProps };
+    });
 
     fetch('http://localhost:4000/page/download', {
       method: 'post',
-      body: JSON.stringify({
-        a: 1,
-      }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify({ data }),
     }).then(response => {
       response.blob().then(blob => {
         setLoading(false);
@@ -45,4 +57,6 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default connect(({ preview }) => ({
+  preview,
+}))(Header);

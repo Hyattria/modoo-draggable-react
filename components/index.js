@@ -1,5 +1,3 @@
-import { reduce } from 'lodash';
-
 import Text from './Text/Index';
 import Image from './Image/Index';
 import PlaceHolder from './Placeholder/Index';
@@ -20,21 +18,22 @@ function registerComponent(key, obj) {
     configs: obj.getPropsConfig,
     propsValue:
       obj.getPropsConfig &&
-      reduce(
-        obj.getPropsConfig,
-        (result, now) => {
-          result[now['name']] = now.detail.defaultValue || '';
-          return result;
-        },
-        {},
-      ), // 传入的 props
+      obj.getPropsConfig.reduce((result, now) => {
+        result[now['name']] = now.detail.defaultValue || '';
+        return result;
+      }, {}), // 传入的 props
   };
 }
 
-registerComponent('text', Text);
+registerComponent('title_text', Text);
 registerComponent('image', Image);
 registerComponent('placeholder', PlaceHolder);
 
 export function getConfigByType(type) {
   return renderMapJSON[type];
 }
+
+// type 对应组件
+export const renderComponentType = {
+  title_text: Text,
+};

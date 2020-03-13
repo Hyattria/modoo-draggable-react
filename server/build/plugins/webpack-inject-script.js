@@ -5,9 +5,7 @@ class InjectScriptPlugin {
   apply(compiler) {
     const uglifyjs = require('uglify-js');
     const { jsonData } = this.options;
-
     const { code } = uglifyjs.minify(`window.pageData=${JSON.stringify(jsonData)}`, {});
-
     compiler.hooks.compilation.tap('webpack-inject-script', compilation => {
       compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(
         'webpack-inject-script',

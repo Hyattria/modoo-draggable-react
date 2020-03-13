@@ -10,7 +10,7 @@ export default {
     *updatePreview({ seletedData, listData }, { call, put, select }) {
       const preview = yield select(({ preview }) => preview);
 
-      const data = { ...preview.seletedData };
+      const data = { ...seletedData };
       let payload = Array.from(listData || preview.previewData);
 
       const index = findIndex(payload, ['uuid', data.uuid]);
@@ -20,14 +20,14 @@ export default {
       }
       yield put({
         type: 'setComponent',
-        payload
-      })
+        payload,
+      });
 
       yield put({
         type: 'setSeletedData',
-        payload: { ...seletedData }
-      })
-    }
+        payload: { ...seletedData },
+      });
+    },
   },
   reducers: {
     setComponent(state, { payload }) {

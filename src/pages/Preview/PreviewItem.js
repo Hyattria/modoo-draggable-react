@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DeleteOutlined } from '@ant-design/icons';
-import { getConfigByType } from '@/components/index';
+import { getConfigByType } from '@components/index';
 import { createUUID } from '@/utils/index';
 import { findIndex, find } from 'lodash';
 import { connect } from 'dva';
@@ -117,7 +117,7 @@ const PreviewItem = (props, ref) => {
     dispatch({
       type: 'preview/updatePreview',
       seletedData,
-      listData
+      listData,
     });
   };
 

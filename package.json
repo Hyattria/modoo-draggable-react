@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev",
+    "dev-client": "umi dev",
     "dev-server": "node server/app.js",
+    "start": "umi dev && node server/app.js",
     "build": "umi build",
     "test": "umi test",
     "lint": "eslint {src,mock,tests}/**/*.{js,jsx} --fix",
