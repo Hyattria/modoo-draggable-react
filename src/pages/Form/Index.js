@@ -1,8 +1,9 @@
 import React from 'react';
-import { Card, Form, Divider, Input } from 'antd';
+import { Card, Form, Divider } from 'antd';
 import { connect } from 'dva';
-import { isEmpty, find } from 'lodash';
+import { isEmpty } from 'lodash';
 import { renderComponentMap } from './Components/Index';
+import styled from 'styled-components';
 
 const inlineLayout = {
   labelCol: { span: 6 },
@@ -11,11 +12,18 @@ const inlineLayout = {
 
 const setLayout = layout => (layout ? { ...inlineLayout } : '');
 
+const FormItem = styled(Form.Item)`
+  margin-bottom: 12px;
+  label {
+    color: ${props => props.horizontal && '#969799'};
+  }
+`;
+
 const FormList = props => {
   const [form] = Form.useForm();
   const {
     dispatch,
-    preview: { previewData, seletedData },
+    preview: { seletedData },
   } = props;
 
   React.useEffect(() => {
@@ -25,10 +33,9 @@ const FormList = props => {
   const onValuesChange = (changedValues, allValues) => {
     const payload = { ...seletedData };
     payload.propsValue = { ...allValues };
-    console.log(payload);
+
     dispatch({
       type: 'preview/updatePreview',
-      listData: previewData,
       seletedData: payload,
     });
   };
@@ -50,18 +57,19 @@ const FormList = props => {
             return (
               <React.Fragment key={name}>
                 {config.divider && <Divider />}
-                <Form.Item
+                <FormItem
                   {...setLayout(config.layout)}
+                  horizontal={config.layout === 'horizontal'}
                   style={{
-                    marginBottom: 12,
-                    flexDirection: config.layout === 'horizontal' ? 'row' : 'column',
+                    flexDirection:
+                      config.layout === 'horizontal' ? 'row' : 'column',
                   }}
                   name={name}
                   label={label}
                   rules={rules}
                 >
                   {renderComponentMap[tag]({ ...detail })}
-                </Form.Item>
+                </FormItem>
               </React.Fragment>
             );
           })}

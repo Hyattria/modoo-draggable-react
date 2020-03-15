@@ -1,5 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  AlignLeftOutlined,
+  AlignCenterOutlined,
+  AlignRightOutlined,
+  FontSizeOutlined,
+  BoldOutlined,
+} from '@ant-design/icons';
 
 const TextContainer = styled.div`
   position: relative;
@@ -13,21 +20,38 @@ const Title = styled.div`
   font-weight: 500;
   color: rgb(50, 50, 51);
   text-align: ${props => props.align};
+  font-size: ${props => props.size + 'px'};
+  font-weight: ${props => props.weight};
 `;
 
 const Description = styled.div`
   color: #8c8c8c;
   font-size: 12px;
-  margin-top: ${props => props.desc ? '8px' : 0};
+  margin-top: ${props => (props.desc ? '8px' : 0)};
   text-align: ${props => props.align};
+  font-size: ${props => props.size + 'px'};
+  font-weight: ${props => props.weight};
 `;
 
 const Text = props => {
-  const { title, desc, align } = props;
+  const {
+    title,
+    desc,
+    align,
+    title_size,
+    desc_size,
+    title_bold,
+    desc_bold,
+  } = props;
+
   return (
     <TextContainer>
-      <Title align={align}>{title}</Title>
-      <Description align={align}>{desc}</Description>
+      <Title align={align} size={title_size} weight={title_bold}>
+        {title}
+      </Title>
+      <Description align={align} size={desc_size} weight={desc_bold}>
+        {desc}
+      </Description>
     </TextContainer>
   );
 };
@@ -61,12 +85,106 @@ Text.getPropsConfig = [
     detail: {
       defaultValue: 'left',
       items: [
-        { label: '居左显示', value: 'left', icon: 'pic-left' },
-        { label: '居中显示', value: 'center', icon: 'pic-center' },
-        { label: '居右显示', value: 'right', icon: 'pic-right' }
-      ]
-    }
-  }
+        { label: '居左显示', value: 'left', icon: <AlignLeftOutlined /> },
+        { label: '居中显示', value: 'center', icon: <AlignCenterOutlined /> },
+        { label: '居右显示', value: 'right', icon: <AlignRightOutlined /> },
+      ],
+    },
+  },
+  {
+    name: 'title_size',
+    tag: 'button-group',
+    label: '标题大小',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: 16,
+      items: [
+        {
+          label: '大 (16号)',
+          value: 16,
+          icon: <FontSizeOutlined style={{ fontSize: 16 }} />,
+        },
+        {
+          label: '中 (14号)',
+          value: 14,
+          icon: <FontSizeOutlined style={{ fontSize: 14 }} />,
+        },
+        {
+          label: '小 (12号)',
+          value: 12,
+          icon: <FontSizeOutlined style={{ fontSize: 12 }} />,
+        },
+      ],
+    },
+  },
+  {
+    name: 'desc_size',
+    tag: 'button-group',
+    label: '描述大小',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: 12,
+      items: [
+        {
+          label: '大 (16号)',
+          value: 16,
+          icon: <FontSizeOutlined style={{ fontSize: 16 }} />,
+        },
+        {
+          label: '中 (14号)',
+          value: 14,
+          icon: <FontSizeOutlined style={{ fontSize: 14 }} />,
+        },
+        {
+          label: '小 (12号)',
+          value: 12,
+          icon: <FontSizeOutlined style={{ fontSize: 12 }} />,
+        },
+      ],
+    },
+  },
+  {
+    name: 'title_bold',
+    tag: 'button-group',
+    label: '标题粗细',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: 'bold',
+      items: [
+        {
+          label: '常规体',
+          value: 'normal',
+          icon: <BoldOutlined style={{ fontSize: 14 }} />,
+        },
+        {
+          label: '加粗体',
+          value: 'bold',
+          icon: <BoldOutlined style={{ fontSize: 16 }} />,
+        },
+      ],
+    },
+  },
+  {
+    name: 'desc_bold',
+    tag: 'button-group',
+    label: '描述粗细',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: 'normal',
+      items: [
+        {
+          label: '常规体',
+          value: 'normal',
+          icon: <BoldOutlined style={{ fontSize: 14 }} />,
+        },
+        {
+          label: '加粗体',
+          value: 'bold',
+          icon: <BoldOutlined style={{ fontSize: 16 }} />,
+        },
+      ],
+    },
+  },
 ];
 
 Text.title = '标题文本';

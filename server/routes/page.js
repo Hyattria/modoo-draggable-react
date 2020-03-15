@@ -4,9 +4,6 @@ const archiver = require('archiver');
 const send = require('koa-send');
 
 const compiler = require('../build/scripts/build');
-
-const { spawnSync } = require('child_process');
-
 const fs = require('fs');
 
 async function zipDirectory(source, out) {

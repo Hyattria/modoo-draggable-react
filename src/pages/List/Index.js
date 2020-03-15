@@ -49,7 +49,12 @@ const List = props => {
         {config.components.map(item => {
           const Icon = item.icon;
           return (
-            <Item span={12} key={item.title} draggable onDragStart={ev => onDragStart(ev, item)}>
+            <Item
+              span={12}
+              key={item.title}
+              draggable
+              onDragStart={ev => onDragStart(ev, item)}
+            >
               <Icon style={{ color: '#323233', fontSize: 32 }} />
               <ItemText>{item.title}</ItemText>
             </Item>

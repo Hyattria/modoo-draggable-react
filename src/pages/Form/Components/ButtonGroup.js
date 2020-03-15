@@ -32,7 +32,7 @@ const ButtonGroup = props => {
       <Radio.Group value={value} onChange={e => onChange(e.target.value)}>
         {items.map(item => (
           <Radio.Button key={item.value} value={item.value}>
-            <Icon type={item.icon} />
+            {item.icon}
           </Radio.Button>
         ))}
       </Radio.Group>
