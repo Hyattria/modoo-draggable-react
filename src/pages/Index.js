@@ -4,10 +4,10 @@ import { AppstoreAddOutlined } from '@ant-design/icons';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'dva';
 
-import Header from './Header'
-import List from './List';
-import Preview from './Preview';
-import FormList from './Form'
+import Header from './Header/Index';
+import List from './List/Index';
+import Preview from './Preview/Index';
+import FormList from './Form/Index';
 
 import styled from 'styled-components';
 
