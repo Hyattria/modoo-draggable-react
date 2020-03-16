@@ -2,7 +2,7 @@ version: '3.7'
 services:
   web:
     container_name: 'react-draggable'
-    image: nginx
+    image: nginx:alpine
     ports:
       - '8082:80'
     volumes:
@@ -10,3 +10,15 @@ services:
       - ./dist/:/usr/share/nginx/html/ #挂载项目
     restart: on-failure
     privileged: true
+  backnode:
+    container_name: 'react-draggable-koa'
+    image: node:alpine
+    environment:
+      - DEPLAY_ENV=production
+    ports:
+      - '8083:4000'
+    volumes:
+      - ./server:/usr/src/server
+      - ./components:/usr/src/server/components
+    working_dir: /usr/src/server
+    command: node app.js

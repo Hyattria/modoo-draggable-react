@@ -14,7 +14,10 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '@components': require('path').resolve(__dirname, '../../components'),
+      '@components':
+        process.env.DEPLAY_ENV === 'production'
+          ? require('path').resolve(__dirname, '../components')
+          : require('path').resolve(__dirname, '../../components'),
     },
   },
   optimization: {
