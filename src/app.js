@@ -3,7 +3,7 @@ export const dva = {
     onError(err) {
       err.preventDefault();
       console.error(err.message);
-      console.log(3123);
+      console.log(123);
     },
   },
 };
