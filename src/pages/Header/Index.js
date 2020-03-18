@@ -13,7 +13,7 @@ const Flex = styled.div`
 const Header = props => {
   const [loading, setLoading] = useState(false);
   const {
-    preview: { previewData, seletedData },
+    preview: { previewData },
   } = props;
 
   const handleDownloadPage = () => {

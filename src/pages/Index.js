@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { AppstoreAddOutlined } from '@ant-design/icons';
+import { FormatPainterOutlined } from '@ant-design/icons';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'dva';
 
@@ -53,7 +53,7 @@ const BasicLayout = props => {
           <Sider collapsed theme="light">
             <SiderMenu defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" title="组件列表">
-                <AppstoreAddOutlined />
+                <FormatPainterOutlined />
                 <span>组件列表</span>
               </Menu.Item>
             </SiderMenu>

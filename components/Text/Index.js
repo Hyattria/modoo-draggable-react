@@ -12,20 +12,20 @@ const TextContainer = styled.div`
   position: relative;
   padding: 12px 8px;
   min-height: 32px;
-  background-color: #fff;
+  background-color: ${props => props.background};
 `;
 
 const Title = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: rgb(50, 50, 51);
+  color: ${props => props.color};
   text-align: ${props => props.align};
   font-size: ${props => props.size + 'px'};
   font-weight: ${props => props.weight};
 `;
 
 const Description = styled.div`
-  color: #8c8c8c;
+  color: ${props => props.color};
   font-size: 12px;
   margin-top: ${props => (props.desc ? '8px' : 0)};
   text-align: ${props => props.align};
@@ -42,14 +42,27 @@ const Text = props => {
     desc_size,
     title_bold,
     desc_bold,
+    title_color,
+    desc_color,
+    bg_color,
   } = props;
 
   return (
-    <TextContainer>
-      <Title align={align} size={title_size} weight={title_bold}>
+    <TextContainer background={bg_color}>
+      <Title
+        align={align}
+        color={title_color}
+        size={title_size}
+        weight={title_bold}
+      >
         {title}
       </Title>
-      <Description align={align} size={desc_size} weight={desc_bold}>
+      <Description
+        align={align}
+        color={desc_color}
+        size={desc_size}
+        weight={desc_bold}
+      >
         {desc}
       </Description>
     </TextContainer>
@@ -183,6 +196,33 @@ Text.getPropsConfig = [
           icon: <BoldOutlined style={{ fontSize: 16 }} />,
         },
       ],
+    },
+  },
+  {
+    name: 'title_color',
+    tag: 'color-pick',
+    label: '标题颜色',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: '#323233',
+    },
+  },
+  {
+    name: 'desc_color',
+    tag: 'color-pick',
+    label: '描述颜色',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: '#969799',
+    },
+  },
+  {
+    name: 'bg_color',
+    tag: 'color-pick',
+    label: '背景颜色',
+    layout: 'horizontal',
+    detail: {
+      defaultValue: '#fff',
     },
   },
 ];
