@@ -32,6 +32,7 @@ const BasicLayout = props => {
     if (!destination) {
       return;
     }
+    console.log(4);
 
     let payload = Array.from(previewData);
     const [remove] = payload.splice(source.index, 1);
