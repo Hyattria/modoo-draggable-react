@@ -1,6 +1,5 @@
 import React from 'react';
-import { Radio } from 'antd';
-import { Icon } from '@ant-design/compatible';
+import { Radio, Tooltip } from 'antd';
 import { find } from 'lodash';
 
 import styled from 'styled-components';
@@ -22,18 +21,28 @@ const Label = styled.div`
 const ButtonGroup = props => {
   const { items, value, onChange } = props;
 
-  const label = React.useMemo(() => {
-    return find(items, ['value', value]) && find(items, ['value', value]).label;
-  }, [value]);
+  const label = React.useMemo(
+    () => {
+      return (
+        find(items, ['value', value]) && find(items, ['value', value]).label
+      );
+    },
+    // eslint-disable-next-line
+    [value],
+  );
 
   return (
     <Flex>
       <Label>{label}</Label>
-      <Radio.Group value={value} onChange={e => onChange(e.target.value)}>
+      <Radio.Group
+        buttonStyle="solid"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+      >
         {items.map(item => (
-          <Radio.Button key={item.value} value={item.value}>
-            {item.icon}
-          </Radio.Button>
+          <Tooltip key={item.value} placement="bottom" title={label}>
+            <Radio.Button value={item.value}>{item.icon}</Radio.Button>
+          </Tooltip>
         ))}
       </Radio.Group>
     </Flex>

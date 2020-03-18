@@ -14,8 +14,11 @@ const setLayout = layout => (layout ? { ...inlineLayout } : '');
 
 const FormItem = styled(Form.Item)`
   margin-bottom: 12px;
+  flex-direction: ${props =>
+    props.direction === 'horizontal' ? 'row' : 'column'}!important;
   label {
-    color: ${props => props.horizontal && '#969799'};
+    color: ${props =>
+      props.direction === 'horizontal' ? '#969799' : 'rgba(0, 0, 0, 0.85)'};
   }
 `;
 
@@ -26,9 +29,13 @@ const FormList = props => {
     preview: { seletedData },
   } = props;
 
-  React.useEffect(() => {
-    form.resetFields();
-  }, [seletedData.uuid]);
+  React.useEffect(
+    () => {
+      form.resetFields();
+    },
+    // eslint-disable-next-line
+    [seletedData.uuid],
+  );
 
   const onValuesChange = (changedValues, allValues) => {
     const payload = { ...seletedData };
@@ -59,11 +66,7 @@ const FormList = props => {
                 {config.divider && <Divider />}
                 <FormItem
                   {...setLayout(config.layout)}
-                  horizontal={config.layout === 'horizontal'}
-                  style={{
-                    flexDirection:
-                      config.layout === 'horizontal' ? 'row' : 'column',
-                  }}
+                  direction={config.layout}
                   name={name}
                   label={label}
                   rules={rules}
