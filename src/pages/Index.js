@@ -8,6 +8,7 @@ import Header from './Header/Index';
 import List from './List/Index';
 import Preview from './Preview/Index';
 import FormList from './Form/Index';
+import Uploads from './Upload/Index';
 
 import styled from 'styled-components';
 
@@ -47,6 +48,7 @@ const BasicLayout = props => {
   return (
     <React.Fragment>
       <LightHeader>
+        <Uploads />
         <Header />
       </LightHeader>
       <DragDropContext onDragEnd={onDropEnd}>

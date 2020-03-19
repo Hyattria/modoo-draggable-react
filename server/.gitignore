@@ -7,5 +7,6 @@
 /yarn.lock
 /package-lock.json
 
+public
 build/dist
 dist.zip

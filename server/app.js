@@ -1,13 +1,11 @@
 // const mongo = require('./config/mongo');
 // mongo.connect();
 
-const fs = require('fs');
-const path = require('path');
-const Koa = require('koa');
 const cors = require('koa2-cors');
-const router = require('koa-router')();
 const koaBody = require('koa-body');
+const router = require('./routes.js');
 
+const Koa = require('koa');
 const app = new Koa();
 
 // 跨域处理
@@ -24,12 +22,8 @@ app.use(
   }),
 );
 
-fs.readdirSync(path.join(__dirname, './routes')).forEach(route => {
-  let api = require(`./routes/${route}`);
-  router.use(`/${route.replace('.js', '')}`, api.routes());
+router(app); /*启动路由*/
+
+app.listen(4000, () => {
+  console.log('server is running at http://localhost:4000');
 });
-
-app.use(router.routes()); /*启动路由*/
-app.use(router.allowedMethods());
-
-app.listen(4000);
